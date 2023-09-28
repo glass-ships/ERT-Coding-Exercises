@@ -8,3 +8,24 @@ The data is then parsed into a Pandas DataFrame and pickled to a file within the
 A maximum of 100 files are stored, and the oldest file is deleted when a new file is downloaded.
 
 A dockerfile is included to build a container to run the application.
+
+## Requirements
+
+- [Python 3.11](https://www.python.org/downloads/)
+- [poetry](https://python-poetry.org/docs/#installation)
+- [Docker](https://docs.docker.com/get-docker/)
+
+## Installation
+
+```bash
+git clone https://github.com/glass-ships/ERT_Coding_Exercises.git
+cd ERT_Coding_Exercises/Data-Collection
+poetry install
+```
+
+## Usage
+
+To see available commands, run:
+```bash
+poetry run data-collection --help
+```
