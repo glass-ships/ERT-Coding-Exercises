@@ -18,7 +18,7 @@ export default function App() {
   };
   return (
     <>
-      <div>
+      <div style={{ alignItems: "center" }}>
         <h1>ERT TypeScript Assessment</h1>
         <button onClick={toggleCanvas}>Draw/Clear Canvas</button>
       </div>
