@@ -1,11 +1,5 @@
-// import { useState } from 'react'
 import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
-// import Canvas from './components/Canvas'
-
-function GetState(currentState: boolean) {
-  return !currentState;
-}
 
 export default function App() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
