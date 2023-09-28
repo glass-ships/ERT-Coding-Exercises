@@ -1,10 +1,8 @@
 from datetime import datetime
 from pathlib import Path
-import pickle
 from typing import Optional
 
-# from pandas import DataFrame
-from pprint import pprint
+import pandas as pd
 import pystow
 import typer
 
@@ -22,22 +20,32 @@ def callback(version: Optional[bool] = typer.Option(None, "--version", is_eager=
         raise typer.Exit()
 
 
-@app.command(name="download", help="Download data from the NOAA SWPC API")
+@app.command(name="download", help="Download latest Realtime Solar Wind Data from NOAA SWPC API")
 def download_data():
+    # Store max 100 files
+    data_dir = pystow.utils.get_base("data_collection")
+    num_files = len(list(data_dir.glob("*.json")))
+    if num_files > 100:
+        files = sorted(list(data_dir.glob("*.json")))
+        for f in files[:-100]:
+            f.unlink()
     Path("data").mkdir(exist_ok=True)
-    dt = datetime.utcnow()
-    timestamp = dt.strftime("%Y%m%d_%H%M")
-    data = stow.ensure_json(url=data_url, force=True)
-    pickle.dump(data, open(f"data/noaa_swpc_data_{timestamp}.pkl", "wb"))
-    pickle.dump(data, open(f"data/noaa_swpc_data_latest.pkl", "wb"))
-    typer.echo("Data downloaded successfully")
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M")
+    data = stow.ensure_json(url=data_url, force=True, name=f"noaa_rswd_{timestamp}.json")
+    new_data = pd.DataFrame(data)
+    try:
+        curr_data = pd.DataFrame(pd.read_pickle("data/noaa_rswd.pkl"))
+    except FileNotFoundError:
+        curr_data = pd.DataFrame()
+    df = pd.concat([curr_data, new_data]).drop_duplicates()
+    df.to_pickle("data/noaa_rswd.pkl")
 
 
-@app.command(name="load", help="Load data from the NOAA SWPC API")
+@app.command(name="load", help="Load aggregated local data")
 def load_data():
-    data = pickle.load(open("data/noaa_swpc_data.pkl", "rb"))
-    typer.echo("Data loaded successfully")
-    pprint(data)
+    df = pd.read_pickle("data/noaa_rswd.pkl")
+    df.to_csv("data/noaa_rswd.csv")  # for debug purposes
+    return df
 
 
 @app.command(name="run", help="Download and load data from the NOAA SWPC API")
