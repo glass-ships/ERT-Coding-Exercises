@@ -25,14 +25,16 @@ def download_data():
     # Store max 100 files
     data_dir = pystow.utils.get_base("data_collection")
     num_files = len(list(data_dir.glob("*.json")))
-    if num_files > 100:
+    if num_files >= 100:
         files = sorted(list(data_dir.glob("*.json")))
         for f in files[:-100]:
             f.unlink()
+    # Download latest data
     Path("data").mkdir(exist_ok=True)
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M")
     data = stow.ensure_json(url=data_url, force=True, name=f"noaa_rswd_{timestamp}.json")
     new_data = pd.DataFrame(data)
+    # Load existing data and append new data
     try:
         curr_data = pd.DataFrame(pd.read_pickle("data/noaa_rswd.pkl"))
     except FileNotFoundError:

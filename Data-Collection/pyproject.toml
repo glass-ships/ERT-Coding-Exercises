@@ -16,6 +16,7 @@ typer = "*"
 loguru = "*"
 pystow = "^0.5.0"
 pandas = "^2.1.1"
+pytest = "^7.4.2"
 
 [tool.poetry.dev-dependencies]
 mkdocs = "*"
