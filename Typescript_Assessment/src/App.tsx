@@ -4,27 +4,26 @@ import "./App.css";
 // import Canvas from './components/Canvas'
 
 function GetState(currentState: boolean) {
-  return currentState;
+  return !currentState;
 }
 
 export default function App() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-  const handleButtonClick = () => {
+  const toggleCanvas = () => {
     // toggle button click
     setIsButtonClicked(!isButtonClicked);
     console.log(`Button clicked: ${isButtonClicked}`);
     return isButtonClicked;
   };
-
   return (
     <>
-      <div className="card">
+      <div>
         <h1>ERT TypeScript Assessment</h1>
-        <button onClick={handleButtonClick}>Draw/Clear Canvas</button>
+        <button onClick={toggleCanvas}>Draw/Clear Canvas</button>
       </div>
-      <div className="canvas">
-        <Canvas width={400} height={400} isClicked={GetState(isButtonClicked)}/>
+      <div style={{ width: "400px", height: "400px", padding: "2rem", justifySelf: "center" }}>
+        {isButtonClicked && <Canvas width={400} height={400} isClicked={isButtonClicked}/>}
       </div>
     </>
   );
