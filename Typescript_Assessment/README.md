@@ -4,7 +4,7 @@ This is a simple React/TS app that uses a button to toggle the visibility of a c
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en/download/)
+- [Node.js](https://nodejs.org/en/download/) v18.17.1
 
 ## Installation
 
