@@ -18,11 +18,11 @@ export default function App() {
   };
   return (
     <>
-      <div style={{ alignItems: "center" }}>
+      <div >
         <h1>ERT TypeScript Assessment</h1>
         <button onClick={toggleCanvas}>Draw/Clear Canvas</button>
       </div>
-      <div style={{ width: "400px", height: "400px", padding: "2rem", justifySelf: "center" }}>
+      <div style={{ width: "400px", height: "400px", padding: "2rem" }}>
         {isButtonClicked && <Canvas width={400} height={400} isClicked={isButtonClicked}/>}
       </div>
     </>
