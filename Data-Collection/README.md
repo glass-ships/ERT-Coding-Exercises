@@ -6,3 +6,5 @@ The source is available at: https://services.swpc.noaa.gov/products/geospace/pro
 The app uses pystow to download the data and store it in a host directory.
 The data is then parsed into a Pandas DataFrame and pickled to a file within the repository.  
 A maximum of 100 files are stored, and the oldest file is deleted when a new file is downloaded.
+
+A dockerfile is included to build a container to run the application.
